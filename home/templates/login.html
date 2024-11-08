@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Plataforma de Treinamento</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<style>
+
+    /* Reset de margens, preenchimentos e box-sizing */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Variáveis globais */
+    :root {
+        --transition: all 0.3s ease;
+    }
+
+    /* Estilos gerais */
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url("{% static 'imagens/login.jpg' %}"); /* Substitua pelo caminho correto */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .login-container {
+    width: 400px; /* Aumente este valor para tornar o card mais largo */
+    padding: 40px; /* Aumente este valor para adicionar mais espaço interno */
+    background: rgba(255, 255, 255, 0.9); /* Fundo branco com transparência */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+    .login-container img {
+        width: 150px;
+        margin-bottom: 15px;
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .input-group input:focus {
+        border-color: #28a745;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #f1dc1c;
+        border: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    button:hover {
+        background: #e1cb1b;
+    }
+
+</style>
+<body>
+    <div class="login-container">
+        <img src="{% static 'imagens/goldensat.png' %}" alt="Golden Sat Logo"> <!-- Substitua pelo caminho do logo -->
+        <h2>LOGIN</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="Usuário" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Senha" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="empresa" name="empresa" placeholder="Empresa" required>
+            </div>
+            <button type="submit">Iniciar Sessão</button>
+        </form>
+    </div>
+</body>
+</html>

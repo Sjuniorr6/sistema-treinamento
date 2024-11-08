@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - Plataforma de Treinamento</title>
+   
+    {% load static %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    /* Reset de margens, preenchimentos e box-sizing */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* Variáveis globais */
+    :root {
+        --transition: all 0.3s ease;
+    }
+    
+    /* Estilos gerais */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f2f2;
+    }
+
+    /* Tema Claro */
+    body.light-theme {
+        background-color: #f7f2f2;
+        color: #212529;
+    }
+
+    /* Tema Escuro */
+    body.dark-theme {
+        background-color: #43484d;
+        color: #ffffff;
+    }
+
+    /* Estilos para o ícone de alternância de tema */
+    .theme-toggle {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+    }
+
+.whatsapp-icon {
+        width: 35px;
+        height: 40px;
+        vertical-align: middle;
+}
+
+.tema-icon {
+    width: 40px;
+        height: 40px;
+}
+    
+    /* Login Container */
+    .login-container {
+        width: 300px;
+        margin: 100px auto;
+        padding: 30px;
+        background: #212529;
+        border-radius: 8px;
+        box-shadow: 0 0 10px #212529;
+    }
+    
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .input-group {
+        margin-bottom: 15px;
+        color: #fafafa;
+    }
+    
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    .input-group input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+    }
+    
+    .input-group input:focus {
+        border-color: #28a745;
+        outline: none;
+    }
+    
+    button {
+        width: 100%;
+        padding: 10px;
+        background: #28a745;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    button:hover {
+        background: #218838;
+    }
+    
+    button:focus {
+        outline: 2px solid #218838;
+        outline-offset: 2px;
+    }
+    
+    .error-message {
+        color: red;
+        margin-top: 10px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .error-message.visible {
+        opacity: 1;
+    }
+    
+    input.invalid {
+        border-color: red;
+    }
+    
+    /* Header */
+    header {
+        background: #212529;
+        color: #ffffff;
+        padding: 10px 0;
+        text-align: center;
+        position: relative;
+    }
+    
+    #logo {
+        width: 100px;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    header h1 {
+        margin-bottom: 10px;
+    }
+    
+    /* Navegação */
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100px;
+        background-color: #212529;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border-radius: 0 10px 10px 0;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        transition: width 0.3s ease-in-out;
+    }
+    
+    nav:hover {
+        width: 200px;
+    }
+    
+    
+    .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os ícones na horizontal */
+    width: 100%; /* Garante que os ícones ocupem a largura do menu */
+    }
+    
+    .nav-links li {
+    display: flex;
+    justify-content: center; /* Centraliza os ícones horizontalmente */
+    margin: 15px 0; /* Espaçamento vertical entre os ícones */
+    }
+    
+    .nav-links li a {
+        color: #f7f6f3;
+        text-decoration: none;
+        font-weight: bold;
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        transition: background 0.3s ease;
+    }
+    
+    .nav-links li a:hover {
+        background-color: #f1dc1c;
+        color: #212529;
+    }
+    
+    .logout-button {
+        margin-top: auto;
+        background-color: #dc3545;
+        text-align: center;
+        padding: 10px;
+        width: 80%;
+        border-radius: 4px;
+        text-decoration: none;
+        color: white;
+    }
+    
+    .logout-button {
+        display: inline-block;
+        padding: 10px 15px;
+        margin: 5px 8px;
+        background: #bd0c0c;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+    }
+    
+    /* Estilo para links com foco */
+    nav ul li a:focus {
+        outline: 2px solid #f1dc1c;
+        outline-offset: 2px;
+    }
+    
+    /* Seções principais */
+    .main {
+        padding: 20px;
+    }
+    
+    .video-section {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .video-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+    
+    .video-section video {
+        width: 90%;
+        height: auto;
+        margin: 20px auto;
+        display: block;
+    }
+    
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    
+    .video-item {
+        background: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+    }
+    
+    .video-item h3 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    .video-item video {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+    
+    .video-item:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        transform: scale(1.02);
+    }
+    
+    /* Rodapé */
+    footer {
+        background: #212529;
+        color: #fafafa;
+        text-align: center;
+        padding: 15px 0;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Responsividade para dispositivos móveis */
+    @media (max-width: 600px) {
+        .login-container {
+            width: 90%;
+            padding: 20px;
+        }
+    
+        nav ul {
+            flex-direction: column;
+        }
+    
+        nav ul li {
+            margin: 10px 0;
+        }
+    }
+    
+    /* Card section */
+    .card-section {
+        max-width: 1000px;
+        margin: 20px auto;
+        text-align: center;
+    }
+    
+    .card-section h2 {
+        margin-bottom: 20px;
+    }
+    
+    .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajuste a quantidade mínima de largura */
+    gap: 30px; /* Aumente o espaço entre os cards */
+    margin: 20px; /* Espaço em volta da grid */
+}
+    
+    .card {
+    background-image: url("{% static 'imagens/equip-card.jpg' %}"); /* Substitua pelo caminho correto da imagem */
+    background-size: cover; /* Faz a imagem cobrir todo o card */
+    background-position: center; /* Centraliza a imagem no card */
+    padding: 20px;
+    border-radius: 12px; /* Aumentar o arredondamento dos cantos */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra mais profunda */
+    height: 400px; /* Altura ajustada */
+    width: 320px; /* Largura ajustada */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    color: #e2e2e2;
+    position: relative;
+    overflow: hidden; /* Garante que nada transborde do card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Leve movimento para cima ao passar o mouse */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); /* Aumenta a sombra ao passar o mouse */
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Ajuste a opacidade para mais ou menos escuro */
+    border-radius: 12px; /* Mantém a borda arredondada */
+    z-index: 1; /* Coloca a sobreposição abaixo do texto */
+}
+
+.card-content {
+    position: relative;
+    z-index: 2; /* Garante que o conteúdo fique acima da sobreposição */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card h3, .card p, .card-button {
+    position: relative;
+    z-index: 2; /* Garante que o texto e o botão fiquem sobre a sobreposição */
+}
+
+.card h3 {
+    color: #f5bd08; /* Cor dourada para o título */
+    font-size: 20px; /* Aumenta o tamanho do título */
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px; /* Aumente este valor para dar mais espaço acima do título */
+}
+
+.card-button {
+    display: inline-block;
+    padding: 12px 20px; /* Aumente o padding para deixar o botão maior */
+    margin: 10px 0; /* Margem melhorada */
+    background: linear-gradient(90deg, #28a745, #34d058); /* Gradiente para o botão */
+    color: white;
+    font-size: 20px; /* Aumente o tamanho da fonte */
+    font-weight: bold; /* Deixe o texto mais grosso */
+    text-decoration: none;
+    border-radius: 6px; /* Aumenta o arredondamento dos cantos */
+    transition: background 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+.card p {
+    color: #eaeaea; /* Texto com cor clara */
+    font-size: 20px; /* Aumenta o tamanho da fonte */
+    margin: 20px 0 10px 0; /* Define o espaçamento acima e abaixo do texto */
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    align-self: flex-end; /* Posiciona o texto mais próximo ao botão */
+}
+
+.card-button:hover {
+    background: linear-gradient(90deg, #34d058, #28a745); /* Inverte o gradiente ao passar o mouse */
+    transform: scale(1.05); /* Leve aumento no tamanho do botão ao passar o mouse */
+}
+    
+.card-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    filter: brightness(1.5); /* Aumenta o brilho do ícone */
+    z-index: 2; /* Garante que o ícone esteja acima da sobreposição */
+}
+    
+/* Links e botões adicionais */
+.modelo-link {
+    color: #fafafa;
+}
+    
+.modelo-link:hover {
+    color: #f1dc1c;
+}
+    
+.equipment-selection {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+    
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+    
+.company-name {
+    color: #f1dc1c;
+}
+    
+.gs-link {
+    color: #fcce05 !important;
+    font-size: 24px;
+    margin-top: 0px;
+}
+    
+/* Diminuir largura dos cards na seção de seleção de equipamentos */
+.equipment-selection .card {
+    width: 400px; /* Defina a largura desejada para os cards */
+    margin: 0 auto; /* Centraliza os cards */
+}
+    
+/* Especificamente para o espaçamento entre os cards da página equipamento-selecao */
+.equipment-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Define um tamanho mínimo para cada card */
+    max-width: 900px;
+    margin: 20px auto;
+    text-align: center;
+    gap: 60px; /* Espaçamento entre os cards */
+}
+    
+.equipment-card-grid .card {
+    width: 300px; /* Define a largura do card automaticamente para caber no grid */
+    padding: 20px; /* Opcional: aumenta o preenchimento interno do card */
+}
+
+.sidebar {
+    background: #212529;
+}  
+
+.chatbot {
+        position: fixed; /* Fixa o botão na tela */
+        bottom: 70px; /* Distância do fundo da tela */
+        right: 70px; /* Distância da direita da tela */
+        background-color: #0b0e11; /* Cor de fundo */
+        color: white; /* Cor do texto */
+        border-radius: 40%; /* Torna o botão redondo */
+        width: 160px; /* Largura do botão */
+        height: 100px; /* Altura do botão */
+        display: flex; /* Para centralizar o conteúdo */
+        align-items: center; /* Centraliza verticalmente */
+        justify-content: center; /* Centraliza horizontalmente */
+        cursor: pointer; /* Cursor de mão */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais profunda */
+        transition: background-color 0.3s, transform 0.2s;
+        font-size: 20px; /* Tamanho do ícone maior */
+}
+
+.chatbot:hover {
+        background-color: #fcce05;
+        transform: scale(1.1); /* Leve aumento ao passar o mouse */
+}
+
+/* Estilo para ocultar o chatbot */
+.chatbot-container {
+        display: none; /* Começa oculto */
+        position: fixed; /* Fixa o chatbot na tela */
+        bottom: 80px; /* Distância do fundo da tela */
+        right: 50px; /* Distância da direita da tela */
+        width: 500px; /* Aumenta a largura do chatbot */
+        height: 600px; /* Aumenta a altura do chatbot */
+        background-color: white; /* Fundo branco */
+        border: 1px solid #ccc; /* Borda cinza */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+        z-index: 1000; /* Mantém acima de outros elementos */
+        border-radius: 10px; /* Bordas mais arredondadas */
+        overflow: hidden; /* Garante que o conteúdo fique dentro da janela */
+        animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+}
+
+.chatbot-header {
+    background-color: #212529;
+    color: white;
+    padding: 10px 20px; /* Adiciona um pouco de espaçamento horizontal */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+.chatbot-header h1 {
+    margin: 0;
+    font-size: 24px;
+    flex-grow: 1; /* Permite que o título ocupe o máximo de espaço */
+    text-align: center; /* Centraliza o texto no espaço restante */
+}
+
+.chatbot-header span {
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.chatbot-header span:hover {
+    color: #ffdddd; /* Cor de destaque no ícone de fechar */
+}
+
+.chatbot-body {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100% - 60px); /* Deixa espaço para o cabeçalho */
+    font-family: Arial, sans-serif;
+    color: #333;
+    font-size: 18px;
+}
+
+.chatbot-body h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.chatbot-body p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.chatbot-body select,
+.chatbot-body option {
+    width: 100%;
+    padding: 10px;
+    font-size: 19px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.chatbot-body select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.chatbot-body #respostaTexto {
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.chat-icon {
+    width: 60px; /* Ajuste o tamanho conforme necessário */
+    height: 60px;
+    margin-right: 8px; /* Espaço entre o ícone e o texto */
+}
+
+</style>
+
+    
+</head>
+<body>
+    <!-- Barra lateral fixa -->
+    <aside class="sidebar">
+        <div class="sidebar-content">
+            <span class="sidebar-logo">GS</span>
+        </div>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+        <header>
+            <img src="{% static 'Imagens/goldensat.png' %}" alt="Logo da Golden Sat" id="logo">
+            <h1>Golden Sat</h1>
+            <nav aria-label="Navegação Principal">
+                <ul class="nav-links">
+                    <li class="company-name">
+                        <a href="#" class="gs-link">GS</a>
+                    </li> 
+                    <li>
+                        <a href="https://wa.me/5511991435201" target="_blank">
+                            <img src="{% static 'Imagens/whatsapp.png' %}" alt="WhatsApp" class="whatsapp-icon">
+                        </a>
+                    </li>
+                    <li>
+                        <img src="{% static 'Imagens/sol.png' %}" alt="Ícone Tema Claro" class="tema-icon" id="themeIcon" onclick="toggleTheme()">
+                    </li>
+                </ul>
+                <a href="{% url 'login' %}" class="logout-button">Logout</a>
+            </nav>
+        </header>
+        
+        <main>
+            <section class="card-section">
+                <h1 id="welcomeMessage">Bem-vindo à Plataforma de Treinamento</h1>                
+                <h2>Treinamentos Disponíveis</h2>
+                <div class="card-grid">
+                    <!-- Card de Pilares sempre acessível -->
+                    <div class="card">
+                        <h3>PILARES</h3>
+                        <img src="{% static 'Imagens/seguranca.png' %}" alt="Ícone Pilares" class="card-icon">
+                        <p>Explore os pilares do treinamento.</p>
+                        <a href="{% url 'pilares' %}" class="card-button">Assistir</a>
+                    </div>
+
+                    <!-- Card de Equipamento - desbloqueado após acessar Pilares -->
+                    <div class="card">
+                        <h3>EQUIPAMENTO</h3>
+                        <img src="{% static 'Imagens/isca.png' %}" alt="Capa do curso de equipamento" class="card-icon">
+                        <p>Aprenda a manusear seu equipamento.</p>
+                        {% if progress.equipamento_watched %}
+                            <a href="{% url 'equipamento-selecao' %}" class="card-button">Assistir</a>
+                        {% else %}
+                            <button disabled class="card-button equipamento-locked">Complete o módulo anterior</button>
+                        {% endif %}
+                    </div>
+
+                    <!-- Card de Inserção - desbloqueado após acessar Equipamento -->
+                    <div class="card">
+                        <h3>INSERÇÃO</h3>
+                        <img src="{% static 'Imagens/insercao.png' %}" alt="Ícone Inserção" class="card-icon">
+                        <p>Realize a inserção na carga de maneira adequada.</p>
+                        {% if progress.insercao_watched %}
+                            <a href="{% url 'insercao' %}" class="card-button">Assistir</a>
+                        {% else %}
+                            <button disabled class="card-button insercao-locked">Complete o vídeo anterior</button>
+                        {% endif %}
+                    </div>
+
+                    <!-- Card de Plataforma - desbloqueado após acessar Inserção -->
+                    <div class="card">
+                        <h3>PLATAFORMA</h3>
+                        <img src="{% static 'Imagens/plataforma.png' %}" alt="Ícone Plataforma" class="card-icon">
+                        <p>Aprenda todas as funcionalidades da plataforma.</p>
+                        {% if progress.plataforma_watched %}
+                            <a href="{% url 'plataforma' %}" class="card-button">Assistir</a>
+                        {% else %}
+                            <button disabled class="card-button plataforma-locked">Complete o vídeo anterior</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Chatbot -->
+            <div class="chatbot" onclick="toggleChatbot()">
+                <img src="{% static 'Imagens/chatbot.png' %}" alt="Ícone de Chatbot" class="chat-icon">
+                <span class="icon-label"><h2>Chat</h2></span>
+            </div>
+        </main>
+        
+        <div class="chatbot-container" id="chatbot">
+            <div class="chatbot-header" onclick="toggleChatbot()">
+                <h1>Chatbot</h1>
+                <span>&#x2715;</span>
+            </div>
+            <div class="chatbot-body">
+                <div class="mb-3">
+                    <label for="opcao" class="form-label">Escolha uma das opções abaixo para saber mais:</label>
+                    <select class="form-select" id="opcao" name="opcao" onchange="mostrarResposta(this.value)">
+                        <option value="">Selecione uma opção</option>
+                        {% for key, value in perguntas_respostas.items %}
+                            <option value="{{ key }}">{{ value.pergunta }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mt-4" id="respostaContainer">
+                    <h3>Resposta:</h3>
+                    <p id="respostaTexto">Selecione uma opção para ver a resposta.</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; Golden Sat - Com você do início ao fim!</p>
+        </footer>
+        
+        <script>
+            // Função para alternar a visibilidade do chatbot
+            function toggleChatbot() {
+                const chatbot = document.getElementById('chatbot');
+                chatbot.style.display = chatbot.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Lista de perguntas e respostas armazenada no frontend
+            const respostas = {
+                {% for key, value in perguntas_respostas.items %}
+                "{{ key }}": "{{ value.resposta|escapejs }}"{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            };
+
+            // Função para exibir a resposta com base na seleção
+            function mostrarResposta(opcaoSelecionada) {
+                const resposta = respostas[opcaoSelecionada] || "Selecione uma opção para ver a resposta.";
+                document.getElementById("respostaTexto").textContent = resposta;
+            }
+
+            // Inicia o chatbot escondido ao carregar a página
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById('chatbot').style.display = 'none';
+            });
+
+            function toggleTheme() {
+                const body = document.body;
+                const themeIcon = document.getElementById("themeIcon");
+
+                body.classList.toggle("dark-theme");
+                body.classList.toggle("light-theme");
+
+                // Alterar o ícone do tema
+                if (body.classList.contains("dark-theme")) {
+                    themeIcon.src = "{% static 'Imagens/sol.png' %}";
+                } else {
+                    themeIcon.src = "{% static 'Imagens/lua.png' %}";
+                }
+            }
+
+            // Verificação periódica de progresso para atualizar a página automaticamente
+            function checkProgress() {
+                fetch("{% url 'check_progress' %}")
+                    .then(response => response.json())
+                    .then(data => {
+                        const equipamentoLiberado = document.querySelector('.equipamento-locked') === null;
+                        const insercaoLiberado = document.querySelector('.insercao-locked') === null;
+                        const plataformaLiberado = document.querySelector('.plataforma-locked') === null;
+
+                        // Recarrega a página se algum card novo foi liberado
+                        if ((data.equipamento_watched && !equipamentoLiberado) ||
+                            (data.insercao_watched && !insercaoLiberado) ||
+                            (data.plataforma_watched && !plataformaLiberado)) {
+                            location.reload();
+                        }
+                    })
+                    .catch(error => console.error("Erro na verificação de progresso:", error));
+            }
+
+            // Configura a verificação para ocorrer a cada 10 segundos
+            setInterval(checkProgress, 10000);
+        </script>
+    </div>
+</body>
+</html>
